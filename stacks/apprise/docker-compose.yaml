@@ -1,0 +1,19 @@
+services:
+  apprise:
+    image: caronc/apprise:latest
+    container_name: apprise-api
+    restart: unless-stopped
+    environment:
+      - TZ=Europe/Paris
+    networks:
+      - proxy-network
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.apprise.rule=Host(`apprise.cavydev.com`)
+      - traefik.http.routers.apprise.entrypoints=websecure
+      - traefik.http.routers.apprise.tls.certresolver=myresolver
+      - traefik.http.routers.apprise.middlewares=authentik-auth@docker
+      - traefik.http.services.apprise.loadbalancer.server.port=8000
+networks:
+  proxy-network:
+    external: true
