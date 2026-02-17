@@ -18,7 +18,6 @@ services:
       - traefik.http.routers.dockge.tls.certresolver=myresolver
       - traefik.http.routers.dockge.middlewares=authentik-auth@docker
       - traefik.http.services.dockge.loadbalancer.server.port=5001
-
 networks:
   proxy-network:
     external: true

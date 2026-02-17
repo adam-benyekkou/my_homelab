@@ -1,0 +1,27 @@
+services:
+  sible:
+    image: ghcr.io/adam-benyekkou/sible:latest
+    container_name: sible
+    restart: unless-stopped
+    volumes:
+      - ${SIBLE_HOST_INFRA_PATH}:${SIBLE_INFRA_PATH}
+      - /opt/infrastructure/stacks/sible/data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - SIBLE_PORT=${SIBLE_PORT}
+      - SIBLE_INFRA_PATH=${SIBLE_INFRA_PATH}
+      - SIBLE_HOST_INFRA_PATH=${SIBLE_HOST_INFRA_PATH}
+      - SIBLE_SECRET_KEY=${SIBLE_SECRET_KEY}
+      - SIBLE_USE_DOCKER=False
+    networks:
+      - proxy-network
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.sible.rule=Host(`sible.cavydev.com`)
+      - traefik.http.routers.sible.entrypoints=websecure
+      - traefik.http.routers.sible.tls.certresolver=myresolver
+      - traefik.http.services.sible.loadbalancer.server.port=${SIBLE_PORT}
+
+networks:
+  proxy-network:
+    external: true

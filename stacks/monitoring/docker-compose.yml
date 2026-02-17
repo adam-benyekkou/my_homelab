@@ -6,7 +6,7 @@ services:
     restart: unless-stopped
     privileged: true
     command:
-      - '--housekeeping_interval=15s'
+      - --housekeeping_interval=60s
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:ro
