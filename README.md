@@ -2,9 +2,9 @@
 
 This repository manages the infrastructure and service configurations for my personal homelab, hosted on a Hetzner VPS. This project serves as the technical foundation for my transition toward a Master’s degree in DevOps & Cloud Engineering.
 
-## Architecture
-
 [**Check Status**](https://snapshots.raintank.io/dashboard/snapshot/nflSU4RwkKH3jz1oVpHgTlDnlIdEUEry?orgId=0&from=2026-02-18T08:54:50.653Z&to=2026-02-18T14:54:50.653Z&timezone=browser&var-host=$__all&var-container=$__all)
+
+## Architecture
 
 ```mermaid
 graph TD
