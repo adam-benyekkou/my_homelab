@@ -16,6 +16,8 @@ graph TD
     CF -->|Traffic| VPS[Hetzner VPS]
     Personal -->|SSH| VPS
     
+    User <-->|2FA Challenge| Authy[Authy MFA]
+    
     subgraph "Hetzner VPS (Debian 12)"
         ReverseProxy[Traefik Proxy]
         
@@ -103,7 +105,7 @@ Fully automated pipelines to ensure code quality and security:
 | Category | Services |
 | :--- | :--- |
 | **Edge & Routing** | Traefik (Reverse Proxy), Cloudflare |
-| **Identity** | Authentik (SSO), HashiCorp Vault, Whisp (Secret-Sharing) |
+| **Identity** | Authentik (SSO), HashiCorp Vault, Whisp (Secret-Sharing), Authy (2FA) |
 | **Observability** | Prometheus, Grafana, Loki, Promtail, AlertManager, Uptime Kuma |
 | **Development** | Gitea (Git Mirroring), Code-Server (Remote IDE) |
 | **Automation** | n8n, Watchtower, Sible (Ansible UI) |
