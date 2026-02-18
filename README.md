@@ -8,8 +8,8 @@ This repository manages the infrastructure and service configurations for my per
 graph TD
     subgraph "Personal Workspace"
         Personal[Personal Machine]
-        Antigravity[Antigravity MCP]
-        Personal <--> Antigravity
+        OpenCode[OpenCode MCP]
+        Personal <--> OpenCode
     end
 
     User([User]) -->|HTTPS/443| CF[Cloudflare DNS]

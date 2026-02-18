@@ -1,14 +1,17 @@
-name: Security Scan
+name: Security Pipeline (Tiered)
 
 on:
   push:
     branches: [ "main", "master" ]
   pull_request:
     branches: [ "main", "master" ]
+  schedule:
+    - cron: '0 0 * * 0' # Weekly scan on Sundays
 
 jobs:
-  gitleaks:
-    name: Gitleaks
+  # TIER 1: PUSH - Secrets & Basic Linting
+  secrets-scan:
+    name: Gitleaks (Secrets)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -17,3 +20,53 @@ jobs:
       - uses: gitleaks/gitleaks-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # TIER 2: PULL REQUEST - Deep Analysis
+  static-analysis:
+    name: IaC & SAST
+    if: github.event_name == 'pull_request' || github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Checkov (IaC)
+        uses: bridgecrewio/checkov-action@master
+        with:
+          directory: .
+          framework: terraform,ansible,dockerfile,docker_compose
+          soft_fail: false
+          download_external_modules: true
+
+      - name: Trivy (Config/IaC)
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'config'
+          severity: 'CRITICAL,HIGH'
+          exit-code: '1'
+
+  dependency-review:
+    name: Dependency Review
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/dependency-review-action@v4
+
+  # TIER 3: SCHEDULED - SBOM & Full Audit
+  sbom-generation:
+    name: SBOM (Syft)
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate SBOM
+        uses: anchore/sbom-action@v0
+        with:
+          path: ./
+          format: spdx-json
+          output-file: ./sbom.spdx.json
+      - name: Upload SBOM
+        uses: actions/upload-artifact@v4
+        with:
+          name: sbom
+          path: ./sbom.spdx.json
