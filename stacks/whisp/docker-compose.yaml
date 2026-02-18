@@ -1,0 +1,28 @@
+services:
+  whisp:
+    image: ghcr.io/adam-benyekkou/whisp-secret:latest
+    container_name: whisp
+    restart: unless-stopped
+    networks:
+      - proxy-network
+    environment:
+      - DATABASE_URL=sqlite+aiosqlite:////app/data/whisp.db
+      - STORAGE_DIR=/app/data/storage
+      - DEBUG=false
+    volumes:
+      - ./data:/app/data
+    tmpfs:
+      - /app/data/storage:size=100M,mode=1777
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy-network"
+      # HTTPS Routing
+      - "traefik.http.routers.whisp.rule=Host(`whisp.cavydev.com`)"
+      - "traefik.http.routers.whisp.entrypoints=websecure"
+      - "traefik.http.routers.whisp.tls.certresolver=myresolver"
+      # Explicit Port
+      - "traefik.http.services.whisp.loadbalancer.server.port=8000"
+
+networks:
+  proxy-network:
+    external: true
