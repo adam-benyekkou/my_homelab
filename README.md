@@ -22,6 +22,7 @@ graph TD
         subgraph "Security & Identity"
             Authentik[Authentik SSO]
             Vault[HashiCorp Vault]
+            Whisp[Whisp Secret-Sharing]
         end
         
         subgraph "Observability Stack"
@@ -41,6 +42,7 @@ graph TD
 
         subgraph "Automation & Backup"
             Ansible[Ansible Config]
+            Sible[Sible UI]
             Restic[Restic Backup]
             Watchtower[Watchtower]
             Cron[Cron Jobs]
@@ -101,10 +103,10 @@ Fully automated pipelines to ensure code quality and security:
 | Category | Services |
 | :--- | :--- |
 | **Edge & Routing** | Traefik (Reverse Proxy), Cloudflare |
-| **Identity** | Authentik (SSO), HashiCorp Vault |
+| **Identity** | Authentik (SSO), HashiCorp Vault, Whisp (Secret-Sharing) |
 | **Observability** | Prometheus, Grafana, Loki, Promtail, AlertManager, Uptime Kuma |
 | **Development** | Gitea (Git Mirroring), Code-Server (Remote IDE) |
-| **Automation** | n8n, Watchtower |
+| **Automation** | n8n, Watchtower, Sible (Ansible UI) |
 | **Content** | WordPress (CavyDev Blog), FreshRSS, Filestash |
 | **Dashboard** | Homarr |
 
@@ -112,6 +114,13 @@ Fully automated pipelines to ensure code quality and security:
 
 I document my infrastructure evolution, technical hurdles, and DevOps journey on my blog:
 [cavydev.com](https://cavydev.com)
+
+### 🚀 Projects Spotlight
+
+I've developed several tools to streamline my homelab operations:
+
+- **[Sible](https://github.com/adam-benyekkou/Sible)**: A modern Web UI for Ansible orchestration, making playbook management and execution more accessible.
+- **[Whisp](https://github.com/adam-benyekkou/Whisp)**: A secure, lightweight secret-sharing application designed for privacy and ease of use.
 
 ---
 *Maintained by Adam Benyekkou — Senior Support & Junior DevOps.*
