@@ -115,7 +115,7 @@ Fully automated pipelines to ensure code quality and security:
 I document my infrastructure evolution, technical hurdles, and DevOps journey on my blog:
 [cavydev.com](https://cavydev.com)
 
-### 🚀 Projects Spotlight
+### Projects Spotlight
 
 I've developed several tools to streamline my homelab operations:
 
