@@ -4,6 +4,8 @@ This repository manages the infrastructure and service configurations for my per
 
 ## Architecture
 
+[**Check Status**](https://snapshots.raintank.io/dashboard/snapshot/nflSU4RwkKH3jz1oVpHgTlDnlIdEUEry?orgId=0&from=2026-02-18T08:54:50.653Z&to=2026-02-18T14:54:50.653Z&timezone=browser&var-host=$__all&var-container=$__all)
+
 ```mermaid
 graph TD
     subgraph "Personal Workspace"
