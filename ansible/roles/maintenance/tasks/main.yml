@@ -26,13 +26,21 @@
     minute: "0"
     job: "/usr/local/bin/restic forget --keep-daily 7 --keep-weekly 4 --keep-monthly 6 --prune"
 
-- name: Monthly Docker Log Truncation
+- name: Weekly Docker Log Truncation
   ansible.builtin.cron:
     name: "docker_log_truncation"
-    day: "1"
+    weekday: "0"
     hour: "5"
     minute: "0"
     job: "find /var/lib/docker/containers/ -name \"*.log\" -exec truncate -s 0 {} \\;"
+
+- name: Weekly System Journal Cleanup
+  ansible.builtin.cron:
+    name: "journald_cleanup"
+    weekday: "0"
+    hour: "5"
+    minute: "30"
+    job: "/usr/bin/journalctl --vacuum-time=7d"
 
 - name: Monthly Restic Integrity Check
   ansible.builtin.cron:

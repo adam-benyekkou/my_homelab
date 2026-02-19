@@ -1,0 +1,27 @@
+name: Dockerfile Linting
+
+on:
+  push:
+    branches: [ "main", "master" ]
+    paths:
+      - '**/Dockerfile'
+      - '**/docker-compose.yml'
+  pull_request:
+    branches: [ "main", "master" ]
+    paths:
+      - '**/Dockerfile'
+      - '**/docker-compose.yml'
+
+jobs:
+  hadolint:
+    name: Hadolint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Hadolint
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: "**/Dockerfile"
+          recursive: true
+          failure-threshold: error

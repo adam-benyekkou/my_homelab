@@ -28,6 +28,13 @@
     state: started
     enabled: true
 
+- name: Configure Docker daemon (Log Rotation)
+  ansible.builtin.template:
+    src: daemon.json.j2
+    dest: /etc/docker/daemon.json
+    mode: '0644'
+  notify: Restart Docker
+
 - name: Add admin user to the docker group
   ansible.builtin.user:
     name: "{{ docker_admin_user }}"
