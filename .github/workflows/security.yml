@@ -14,7 +14,7 @@ jobs:
     name: Gitleaks (Secrets)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - uses: gitleaks/gitleaks-action@v2
@@ -27,7 +27,7 @@ jobs:
     if: github.event_name == 'pull_request' || github.event_name == 'schedule'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Checkov (IaC)
         uses: bridgecrewio/checkov-action@master
@@ -49,7 +49,7 @@ jobs:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: actions/dependency-review-action@v4
 
   # TIER 3: SCHEDULED - SBOM & Full Audit
@@ -58,7 +58,7 @@ jobs:
     if: github.event_name == 'schedule'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Generate SBOM
         uses: anchore/sbom-action@v0
         with:
@@ -66,7 +66,7 @@ jobs:
           format: spdx-json
           output-file: ./sbom.spdx.json
       - name: Upload SBOM
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: sbom
           path: ./sbom.spdx.json
